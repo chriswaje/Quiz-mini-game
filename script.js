@@ -2,7 +2,13 @@ var startButtonEl = document.querySelector('.start-btn');
 var timeLeftEl = document.querySelector('#time-left');
 var startScreenEl = document.querySelector('#welcome-page');
 var questionsContEl = document.querySelector('#questions');
-var highscore = document.querySelector('#highscore');
+var highscoreForm = document.querySelector('#highscore-form');
+
+var initialsBox = document.createElement('input');
+var submitScore = document.createElement('button');
+var scoreMessage = document.createElement('h2');
+
+
 
 
 // keeps track of current question rendered on the page
@@ -92,7 +98,18 @@ function quizDone() {
   questionsContEl.innerHTML = `<h1>You scored ${userScore} points out of 100!<h1>`;
   timeLeftEl.textContent = '';
 
+  scoreMessage.textContent = 'Please enter your initials to save your score';
+  submitScore.textContent = 'Submit';
+  highscoreForm.append(scoreMessage, initialsBox, submitScore);
+  
+  submitScore.addEventListener('submit', function (event) {
+    event.preventDefault();
+    var userInitials = initialsBox.value;
+    localStorage.setItem(userInitials, userScore);
+  });
+
 }
+
 
 
 // function to render our current question
@@ -148,3 +165,4 @@ function choiceInput(event) {
 startButtonEl.addEventListener('click', startBtn);
 // event listener for choice buttons
 questionsContEl.addEventListener('click', choiceInput);
+
